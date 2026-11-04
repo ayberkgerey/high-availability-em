@@ -1,0 +1,24 @@
+{
+  "name": "peopledesk-employee-management",
+  "version": "1.0.0",
+  "description": "PeopleDesk – stateless Employee Management REST API and web UI designed for AWS EC2 + ALB + Amazon Aurora MySQL",
+  "main": "server.js",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "db:init": "node scripts/init-db.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.700.0",
+    "compression": "^1.7.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "mysql2": "^3.11.5"
+  }
+}

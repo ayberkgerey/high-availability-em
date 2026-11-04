@@ -1,0 +1,30 @@
+# Local development database only (stand-in for Aurora MySQL 3 / MySQL 8.0).
+# Production uses Amazon Aurora; this file is never used on EC2.
+#
+#   docker compose up -d
+#
+# schema.sql runs automatically on the first start (empty volume).
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: peopledesk-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-local-root-password}
+      MYSQL_DATABASE: employee_management
+      MYSQL_USER: ${DB_USER:-app_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-change-me-locally}
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-p${MYSQL_ROOT_PASSWORD:-local-root-password}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  mysql-data:

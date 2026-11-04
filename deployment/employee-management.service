@@ -1,0 +1,49 @@
+[Unit]
+Description=PeopleDesk Employee Management (Node.js / Express)
+Documentation=https://github.com/your-username/aurora-employee-management
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=nodeapp
+Group=nodeapp
+WorkingDirectory=/opt/employee-management/backend
+
+# All configuration (PORT, AWS_REGION, AWS_SECRET_NAME, DB_* ...) comes from this file.
+# Values in the EnvironmentFile override the Environment= defaults below.
+Environment=NODE_ENV=production
+Environment=PORT=3000
+EnvironmentFile=/etc/employee-management/app.env
+
+ExecStart=/usr/bin/node server.js
+
+# Self-healing: restart on crash. The ALB marks the target unhealthy meanwhile.
+Restart=always
+RestartSec=5
+StartLimitIntervalSec=120
+StartLimitBurst=10
+
+# Graceful shutdown: server.js drains in-flight requests on SIGTERM.
+KillSignal=SIGTERM
+TimeoutStopSec=30
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=employee-management
+
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

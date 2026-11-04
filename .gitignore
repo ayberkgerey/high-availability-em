@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Environment / secrets – never commit
+.env
+.env.*
+!.env.example
+*.pem
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Coverage / build output
+coverage/
+dist/

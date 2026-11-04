@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PeopleDesk – modern employee management" />
+  <title>PeopleDesk · Employee Management</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- Icon sprite (Lucide-style, MIT) -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-dashboard" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-user-check" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+    <symbol id="i-plane" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4M10 10h4M10 14h4M10 18h4"/></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><path d="M12 15V3"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M10 11v6M14 11v6"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-sort" viewBox="0 0 24 24"><path d="m21 16-4 4-4-4M17 20V4M3 8l4-4 4 4M7 4v16"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="m5 12 7-7 7 7M12 19V5"/></symbol>
+    <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></symbol>
+    <symbol id="i-check-circle" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></symbol>
+    <symbol id="i-server" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol>
+    <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+    <symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
+    <symbol id="i-dollar" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+    <symbol id="i-user-x" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m17 8 5 5M22 8l-5 5"/></symbol>
+    <symbol id="i-hash" viewBox="0 0 24 24"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></symbol>
+  </svg>
+
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="sidebar__brand">
+        <img src="assets/favicon.svg" alt="" class="sidebar__logo" width="34" height="34" />
+        <div>
+          <div class="sidebar__name">PeopleDesk</div>
+          <div class="sidebar__tagline">HR Management</div>
+        </div>
+        <button class="icon-btn sidebar__close" id="sidebarClose" aria-label="Close navigation">
+          <svg class="icon"><use href="#i-x" /></svg>
+        </button>
+      </div>
+
+      <nav class="sidebar__nav">
+        <div class="nav-section">Workspace</div>
+        <a href="#/dashboard" class="nav-link" data-route="dashboard">
+          <svg class="icon"><use href="#i-dashboard" /></svg><span>Dashboard</span>
+        </a>
+        <a href="#/departments" class="nav-link" data-route="departments">
+          <svg class="icon"><use href="#i-building" /></svg><span>Departments</span>
+        </a>
+        <div class="nav-section">Infrastructure</div>
+        <a href="#/system" class="nav-link" data-route="system">
+          <svg class="icon"><use href="#i-activity" /></svg><span>System Status</span>
+        </a>
+      </nav>
+
+      <div class="sidebar__footer">
+        <div class="status-card" id="sidebarDbStatus">
+          <div class="status-card__row">
+            <span class="dot dot--muted" id="sidebarDbDot"></span>
+            <span class="status-card__title">Aurora MySQL</span>
+          </div>
+          <div class="status-card__meta" id="sidebarDbText">Checking connection…</div>
+        </div>
+      </div>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Main -->
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn topbar__menu" id="sidebarOpen" aria-label="Open navigation">
+          <svg class="icon"><use href="#i-menu" /></svg>
+        </button>
+        <div class="topbar__search">
+          <svg class="icon"><use href="#i-search" /></svg>
+          <input type="search" id="globalSearch" placeholder="Search employees by name, email or title…" autocomplete="off" aria-label="Search employees" />
+          <kbd>/</kbd>
+        </div>
+        <div class="topbar__right">
+          <div class="instance-chip" id="instanceChip" title="EC2 instance that served this page">
+            <svg class="icon"><use href="#i-server" /></svg>
+            <span id="instanceChipText">Detecting instance…</span>
+          </div>
+          <div class="user-menu">
+            <div class="avatar avatar--sm" style="--avatar-bg:#ede9fe;--avatar-fg:#6d28d9">HR</div>
+            <div class="user-menu__text">
+              <div class="user-menu__name">HR Admin</div>
+              <div class="user-menu__role">Administrator</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content" id="content">
+        <!-- Dashboard view -->
+        <section class="view" id="view-dashboard" data-view="dashboard">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Dashboard</h1>
+              <p class="page-subtitle">Overview of your workforce across all departments.</p>
+            </div>
+            <div class="page-actions">
+              <button class="btn btn--secondary" id="exportBtn">
+                <svg class="icon"><use href="#i-download" /></svg>Export CSV
+              </button>
+              <button class="btn btn--primary" id="addEmployeeBtn">
+                <svg class="icon"><use href="#i-plus" /></svg>Add employee
+              </button>
+            </div>
+          </div>
+
+          <div class="stats-grid" id="statsGrid">
+            <article class="stat-card">
+              <div class="stat-card__icon stat-card__icon--indigo"><svg class="icon"><use href="#i-users" /></svg></div>
+              <div class="stat-card__body">
+                <div class="stat-card__label">Total Employees</div>
+                <div class="stat-card__value" data-stat="totalEmployees"><span class="skeleton skeleton--text"></span></div>
+                <div class="stat-card__hint">Across all locations</div>
+              </div>
+            </article>
+            <article class="stat-card">
+              <div class="stat-card__icon stat-card__icon--green"><svg class="icon"><use href="#i-user-check" /></svg></div>
+              <div class="stat-card__body">
+                <div class="stat-card__label">Active Employees</div>
+                <div class="stat-card__value" data-stat="activeEmployees"><span class="skeleton skeleton--text"></span></div>
+                <div class="stat-card__hint" data-stat-hint="activeEmployees">&nbsp;</div>
+              </div>
+            </article>
+            <article class="stat-card">
+              <div class="stat-card__icon stat-card__icon--amber"><svg class="icon"><use href="#i-plane" /></svg></div>
+              <div class="stat-card__body">
+                <div class="stat-card__label">Employees on Leave</div>
+                <div class="stat-card__value" data-stat="employeesOnLeave"><span class="skeleton skeleton--text"></span></div>
+                <div class="stat-card__hint">Currently away</div>
+              </div>
+            </article>
+            <article class="stat-card">
+              <div class="stat-card__icon stat-card__icon--violet"><svg class="icon"><use href="#i-building" /></svg></div>
+              <div class="stat-card__body">
+                <div class="stat-card__label">Total Departments</div>
+                <div class="stat-card__value" data-stat="totalDepartments"><span class="skeleton skeleton--text"></span></div>
+                <div class="stat-card__hint">Organizational units</div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Employee directory -->
+          <section class="card directory" aria-labelledby="directoryTitle">
+            <div class="card__header">
+              <div>
+                <h2 class="card__title" id="directoryTitle">Employee Directory</h2>
+                <p class="card__subtitle" id="directorySummary">Loading employees…</p>
+              </div>
+            </div>
+
+            <div class="toolbar">
+              <div class="input-icon toolbar__search">
+                <svg class="icon"><use href="#i-search" /></svg>
+                <input type="search" id="directorySearch" class="input" placeholder="Search name, email, job title" autocomplete="off" aria-label="Search employees" />
+              </div>
+              <select id="departmentFilter" class="select" aria-label="Filter by department">
+                <option value="">All departments</option>
+              </select>
+              <select id="statusFilter" class="select" aria-label="Filter by status">
+                <option value="">All statuses</option>
+                <option value="Active">Active</option>
+                <option value="On Leave">On Leave</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+              <select id="sortSelect" class="select" aria-label="Sort employees">
+                <option value="name:asc">Name (A–Z)</option>
+                <option value="name:desc">Name (Z–A)</option>
+                <option value="hireDate:desc">Newest hires</option>
+                <option value="hireDate:asc">Oldest hires</option>
+              </select>
+              <button class="btn btn--ghost" id="clearFiltersBtn" hidden>
+                <svg class="icon"><use href="#i-x" /></svg>Clear
+              </button>
+            </div>
+
+            <div class="table-wrap">
+              <table class="table" id="employeeTable">
+                <thead>
+                  <tr>
+                    <th><button class="th-sort" data-sort="name">Employee <svg class="icon icon--xs"><use href="#i-sort" /></svg></button></th>
+                    <th>Job title</th>
+                    <th>Department</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Location</th>
+                    <th><button class="th-sort" data-sort="hireDate">Hire date <svg class="icon icon--xs"><use href="#i-sort" /></svg></button></th>
+                    <th class="table__actions-col"><span class="sr-only">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody id="employeeTableBody"></tbody>
+              </table>
+            </div>
+
+            <div class="table-footer">
+              <div class="table-footer__info" id="paginationInfo">&nbsp;</div>
+              <div class="table-footer__controls">
+                <label class="page-size">
+                  Rows
+                  <select id="pageSizeSelect" class="select select--sm" aria-label="Rows per page">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                  </select>
+                </label>
+                <nav class="pagination" id="pagination" aria-label="Pagination"></nav>
+              </div>
+            </div>
+          </section>
+
+          <div class="insights-grid">
+            <section class="card">
+              <div class="card__header">
+                <div>
+                  <h2 class="card__title">Headcount by department</h2>
+                  <p class="card__subtitle">Distribution of employees</p>
+                </div>
+              </div>
+              <div class="bar-list" id="departmentBreakdown"></div>
+            </section>
+            <section class="card">
+              <div class="card__header">
+                <div>
+                  <h2 class="card__title">Recent hires</h2>
+                  <p class="card__subtitle">Latest additions to the team</p>
+                </div>
+              </div>
+              <ul class="people-list" id="recentHires"></ul>
+            </section>
+          </div>
+        </section>
+
+        <!-- Departments view -->
+        <section class="view" id="view-departments" data-view="departments" hidden>
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Departments</h1>
+              <p class="page-subtitle">Organizational units and their headcount.</p>
+            </div>
+          </div>
+          <div class="departments-grid" id="departmentsGrid"></div>
+        </section>
+
+        <!-- System view -->
+        <section class="view" id="view-system" data-view="system" hidden>
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">System Status</h1>
+              <p class="page-subtitle">Live view of the instance serving you and its connection to Aurora.</p>
+            </div>
+            <div class="page-actions">
+              <button class="btn btn--secondary" id="refreshSystemBtn">
+                <svg class="icon"><use href="#i-refresh" /></svg>Refresh
+              </button>
+            </div>
+          </div>
+
+          <div class="system-grid">
+            <section class="card">
+              <div class="card__header">
+                <div class="card__header-title">
+                  <div class="stat-card__icon stat-card__icon--indigo"><svg class="icon"><use href="#i-server" /></svg></div>
+                  <div>
+                    <h2 class="card__title">Serving instance</h2>
+                    <p class="card__subtitle">Resolved via EC2 instance metadata (IMDSv2)</p>
+                  </div>
+                </div>
+              </div>
+              <dl class="kv" id="instanceDetails"></dl>
+            </section>
+
+            <section class="card">
+              <div class="card__header">
+                <div class="card__header-title">
+                  <div class="stat-card__icon stat-card__icon--green"><svg class="icon"><use href="#i-shield" /></svg></div>
+                  <div>
+                    <h2 class="card__title">Health checks</h2>
+                    <p class="card__subtitle">Endpoints used by the load balancer</p>
+                  </div>
+                </div>
+              </div>
+              <div class="health-list" id="healthChecks"></div>
+            </section>
+          </div>
+
+          <section class="card">
+            <div class="card__header">
+              <div class="card__header-title">
+                <div class="stat-card__icon stat-card__icon--violet"><svg class="icon"><use href="#i-layers" /></svg></div>
+                <div>
+                  <h2 class="card__title">Load balancer distribution test</h2>
+                  <p class="card__subtitle">Sends 20 requests to <code>/api/instance</code> and shows which instances answered.</p>
+                </div>
+              </div>
+              <button class="btn btn--primary" id="lbTestBtn">
+                <svg class="icon"><use href="#i-zap" /></svg>Run test
+              </button>
+            </div>
+            <div class="lb-results" id="lbResults">
+              <p class="muted">Run the test to see how the Application Load Balancer spreads requests across EC2 instances and Availability Zones.</p>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Add / edit employee modal -->
+  <div class="modal" id="employeeModal" role="dialog" aria-modal="true" aria-labelledby="employeeModalTitle" hidden>
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__panel">
+      <div class="modal__header">
+        <div>
+          <h2 class="modal__title" id="employeeModalTitle">Add employee</h2>
+          <p class="modal__subtitle" id="employeeModalSubtitle">Fill in the details to add a new team member.</p>
+        </div>
+        <button class="icon-btn" data-close-modal aria-label="Close">
+          <svg class="icon"><use href="#i-x" /></svg>
+        </button>
+      </div>
+      <form id="employeeForm" class="form" novalidate>
+        <div class="modal__body">
+          <div class="form-section">Personal information</div>
+          <div class="form-grid">
+            <div class="field">
+              <label for="firstName">First name <span class="req">*</span></label>
+              <input class="input" id="firstName" name="firstName" maxlength="100" autocomplete="off" required />
+              <div class="field__error" data-error-for="firstName"></div>
+            </div>
+            <div class="field">
+              <label for="lastName">Last name <span class="req">*</span></label>
+              <input class="input" id="lastName" name="lastName" maxlength="100" autocomplete="off" required />
+              <div class="field__error" data-error-for="lastName"></div>
+            </div>
+            <div class="field field--full">
+              <label for="email">Work email <span class="req">*</span></label>
+              <input class="input" id="email" name="email" type="email" maxlength="255" autocomplete="off" placeholder="name@company.com" required />
+              <div class="field__error" data-error-for="email"></div>
+            </div>
+            <div class="field field--full">
+              <label for="location">Location <span class="req">*</span></label>
+              <input class="input" id="location" name="location" maxlength="150" placeholder="e.g. Seattle, WA or Remote" required />
+              <div class="field__error" data-error-for="location"></div>
+            </div>
+          </div>
+
+          <div class="form-section">Employment</div>
+          <div class="form-grid">
+            <div class="field">
+              <label for="jobTitle">Job title <span class="req">*</span></label>
+              <input class="input" id="jobTitle" name="jobTitle" maxlength="150" required />
+              <div class="field__error" data-error-for="jobTitle"></div>
+            </div>
+            <div class="field">
+              <label for="department">Department <span class="req">*</span></label>
+              <select class="select" id="department" name="department" required>
+                <option value="">Select department</option>
+              </select>
+              <div class="field__error" data-error-for="department"></div>
+            </div>
+            <div class="field">
+              <label for="employmentType">Employment type <span class="req">*</span></label>
+              <select class="select" id="employmentType" name="employmentType" required>
+                <option value="Full-time">Full-time</option>
+                <option value="Part-time">Part-time</option>
+                <option value="Contract">Contract</option>
+              </select>
+              <div class="field__error" data-error-for="employmentType"></div>
+            </div>
+            <div class="field">
+              <label for="status">Employment status <span class="req">*</span></label>
+              <select class="select" id="status" name="status" required>
+                <option value="Active">Active</option>
+                <option value="On Leave">On Leave</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+              <div class="field__error" data-error-for="status"></div>
+            </div>
+            <div class="field">
+              <label for="hireDate">Hire date <span class="req">*</span></label>
+              <input class="input" id="hireDate" name="hireDate" type="date" min="1950-01-01" required />
+              <div class="field__error" data-error-for="hireDate"></div>
+            </div>
+            <div class="field">
+              <label for="salary">Annual salary (USD) <span class="req">*</span></label>
+              <div class="input-prefix">
+                <span>$</span>
+                <input class="input" id="salary" name="salary" type="number" min="0" max="99999999.99" step="0.01" inputmode="decimal" required />
+              </div>
+              <div class="field__error" data-error-for="salary"></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal__footer">
+          <button type="button" class="btn btn--secondary" data-close-modal>Cancel</button>
+          <button type="submit" class="btn btn--primary" id="employeeSubmitBtn">
+            <span class="spinner" hidden></span>
+            <span class="btn__label">Save employee</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Employee detail modal -->
+  <div class="modal" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="detailName" hidden>
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__panel modal__panel--md">
+      <div class="detail-hero">
+        <button class="icon-btn detail-hero__close" data-close-modal aria-label="Close">
+          <svg class="icon"><use href="#i-x" /></svg>
+        </button>
+      </div>
+      <div class="detail" id="detailContent"></div>
+      <div class="modal__footer">
+        <button type="button" class="btn btn--danger-ghost" id="detailDeleteBtn">
+          <svg class="icon"><use href="#i-trash" /></svg>Delete
+        </button>
+        <button type="button" class="btn btn--primary" id="detailEditBtn">
+          <svg class="icon"><use href="#i-pencil" /></svg>Edit employee
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm delete modal -->
+  <div class="modal" id="confirmModal" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle" hidden>
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__panel modal__panel--sm">
+      <div class="modal__body confirm">
+        <div class="confirm__icon"><svg class="icon"><use href="#i-trash" /></svg></div>
+        <h2 class="modal__title" id="confirmTitle">Delete employee?</h2>
+        <p class="muted" id="confirmText">This action cannot be undone.</p>
+      </div>
+      <div class="modal__footer">
+        <button type="button" class="btn btn--secondary" data-close-modal>Cancel</button>
+        <button type="button" class="btn btn--danger" id="confirmDeleteBtn">
+          <span class="spinner" hidden></span>
+          <span class="btn__label">Delete employee</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="false"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
